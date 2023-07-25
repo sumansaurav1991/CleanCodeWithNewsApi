@@ -1,6 +1,6 @@
 ## Technology Used
 
-The NewsWave app utilizes the following technologies:
+The News app utilizes the following technologies:
 
 - Android SDK
 - Kotlin programming language
