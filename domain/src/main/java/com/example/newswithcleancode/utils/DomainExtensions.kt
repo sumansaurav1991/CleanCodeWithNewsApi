@@ -13,7 +13,7 @@ fun Long.formatDate(): String = LocalDateTime
     .formatDate()
 
 fun LocalDateTime.formatDate(): String =
-    atOffset(ZoneOffset.UTC).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss Z"))
+    atOffset(ZoneOffset.UTC).format(DateTimeFormatter.ofPattern(Constent.PATTERN))
 
 fun SearchRange.toDatePair(
     customEpochSecond: Long = 0 // Second, not millisecond. Beware.

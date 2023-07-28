@@ -29,7 +29,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "CURRENTS_API_KEY", "\"ehTUs_L7VNOevxSsW301L3Y6KhOmJ573Grs-VKu--uPjKPZF\""
+            buildConfigField "String", "NEWS_BASE_URL", "\"https://api.currentsapi.services/v1/\""
+        }
         release {
+            buildConfigField "String", "CURRENTS_API_KEY", "ehTUs_L7VNOevxSsW301L3Y6KhOmJ573Grs-VKu--uPjKPZF"
+            buildConfigField "String", "NEWS_BASE_URL", "\"https://api.currentsapi.services/v1/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -51,6 +57,7 @@ android {
     }
     buildFeatures {
         compose true
+        buildConfig = true
     }
     packagingOptions {
         resources {

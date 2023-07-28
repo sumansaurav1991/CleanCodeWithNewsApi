@@ -1,8 +1,7 @@
 package com.example.newswithcleancode.di
 
 import android.content.Context
-import com.example.newswithcleancode.DataConst
-import com.example.newswithcleancode.R
+import com.example.newswithcleancode.BuildConfig
 import com.example.newswithcleancode.api.ApiNews
 import com.example.newswithcleancode.api.NewsApiInterceptor
 import dagger.Module
@@ -26,17 +25,25 @@ class NetworkModules {
     fun providesApiNews(
         @ApplicationContext context: Context
     ) = Retrofit.Builder()
-        .baseUrl(DataConst.NEWS_BASE_URL)
+        .baseUrl(BuildConfig.NEWS_BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
-        .client( OkHttpClient().newBuilder()
-            .addInterceptor(NewsApiInterceptor(context.getString(R.string.CURRENTS_API_KEY)))
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
-            .build()
-        )
+        .client( provideOkHttpClient())
         .build()
         .create<ApiNews>()
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(): OkHttpClient{
+        val okhttpBuilder = OkHttpClient.Builder() //and every other method after it except build() would return a Builder (Builder pattern)
+        // .addInterceptor(NewsApiInterceptor(context.getString(R.string.CURRENTS_API_KEY)))
+        okhttpBuilder.addInterceptor(NewsApiInterceptor(BuildConfig.CURRENTS_API_KEY))
+        if(BuildConfig.DEBUG){
+            okhttpBuilder .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
+        }
+        return okhttpBuilder.build()
+    }
 
     @Provides
     @Singleton
